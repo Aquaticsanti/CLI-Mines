@@ -1,5 +1,6 @@
 from rich import box
 from rich.console import Console
+from rich.panel import Panel
 from rich.table import Table
 from readchar import key, readkey
 import time
@@ -22,26 +23,26 @@ def printTitle():
     console.print("Made with :red_heart-emoji:  by @Aquaticsanti\n\n", style="bold default on default", justify="center")
     
     if selected == 1:
-        console.print(f" Width  = {width}", justify="center", style="black on white")
+        console.print(f" Width  = {width}", justify="center", style="black on white", highlight=False)
     else:
-        console.print(f" Width  = {width}", justify="center")
+        console.print(f" Width  = {width}", justify="center", highlight=False)
     if selected == 2:
-        console.print(f" Height = {height}", justify="center", style="black on white")
+        console.print(f" Height = {height}", justify="center", style="black on white", highlight=False)
     else:
-        console.print(f" Height = {height}", justify="center")
+        console.print(f" Height = {height}", justify="center", highlight=False)
     if selected == 3:
-        console.print(f" Mines  = {mines}", justify="center", style="black on white")
+        console.print(f" Mines  = {mines}", justify="center", style="black on white", highlight=False)
     else:
-        console.print(f" Mines  = {mines}", justify="center")
+        console.print(f" Mines  = {mines}", justify="center", highlight=False)
     print("\n")
     if selected == 4:
         console.print("""╔════════════════╗
 ║     Start!     ║
-╚════════════════╝""", markup=True, justify="center", style="black on white")
+╚════════════════╝""", markup=True, justify="center", style="black on white", highlight=False)
     else:
         console.print("""╔════════════════╗
 ║     Start!     ║
-╚════════════════╝""", markup=True, justify="center")
+╚════════════════╝""", markup=True, justify="center", highlight=False)
 
 
 
@@ -80,15 +81,25 @@ while True:
     elif k == key.ENTER and selected == 4:
         break
 
-# For later!
-#table = Table(title="", box=box.SQUARE, show_lines=True)
-#
-#for i in range(width):
-#    table.add_column(width=2)
-#
-#for i in range(height-1):
-#    table.add_row()
-#
-#console.print(table)
+print("\n\n\n\n")
+
+
+
+grid = Table.grid()
+squares = []
+for i in range(width):
+    grid.add_column("")
+    squares.append(Panel("", box=box.SQUARE, width=6, height=3, style="white on #808080"))
+
+
+for i in range(height):
+    grid.add_row(*squares)
+
+console.print(grid, justify="center")
+
+
+
+
+
 
 

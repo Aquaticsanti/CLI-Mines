@@ -46,7 +46,7 @@ def printTitle():
 
 
 
-while True:
+""" while True:
     print("\033[16A")
     printTitle()
     k = readkey()
@@ -81,25 +81,50 @@ while True:
     elif k == key.ENTER and selected == 4:
         break
 
-print("\n\n\n\n")
+print("\n\n\n\n") """
+
+width += 1 # I know this is weird, but else 9x9 doesn't look square
+def printGrid():
+    global grid, fullGrid, thisRow, width, height, selected
+    grid = Table.grid()
+    fullGrid = []
+    thisRow = []
+    for i in range(width*height):
+        if i == selected:
+            thisRow.append(Panel(f"{i}", box=box.SQUARE, width=6, height=3, style="#808080 on white"))
+        else:
+            thisRow.append(Panel(f"{i}", box=box.SQUARE, width=6, height=3, style="white on #808080"))
+        if len(thisRow) == width:
+            fullGrid.append(thisRow)
+            grid.add_row(*thisRow)
+            thisRow = []
+    console.print(grid, justify="center")
+
+
+selected = 0
+while True:
+    print(f"\033[{(height*3)+1}A")
+    printGrid()
+    k = readkey()
+    if k == key.DOWN:
+        selected += 10
+        if selected > (height*10)-10:
+            selected -= 10
+    elif k == key.UP:
+        selected -= 10
+        if selected < 0:
+            selected += 10
+    elif k == key.LEFT:
+        selected -= 1
+        if selected < 0:
+            selected += 1
+    elif k == key.RIGHT:
+        selected += 1
+        if selected > (width*height)-1:
+            selected -= 1
 
 
 
-grid = Table.grid()
-squares = []
-for i in range(width):
-    grid.add_column("")
-    squares.append(Panel("", box=box.SQUARE, width=6, height=3, style="white on #808080"))
 
 
-for i in range(height):
-    grid.add_row(*squares)
-
-console.print(grid, justify="center")
-
-
-
-
-
-
-
+ 

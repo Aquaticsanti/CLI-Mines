@@ -91,6 +91,8 @@ _infoGrid_ guide:
 0 = Empty
 1 - 8 = n mines around cell
 """
+width += 1 # I know this is weird, but else 9x9 doesn't look square. Was going to remove it but then everything else broke
+
 infoGrid = [] # List that holds what cells are what
 for i in range(width*height):
     infoGrid.append(0)

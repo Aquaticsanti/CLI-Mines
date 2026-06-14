@@ -17,7 +17,7 @@ mines = 10
 class styles:
     hidden_selected = Style.parse("#606060 on white")
     hidden_unselected = Style.parse("white on #606060")
-    
+
     shown_0_selected = Style.parse("#808080 on white")
     shown_0_unselected = Style.parse("white on #808080")
 
@@ -137,6 +137,13 @@ for i in range(mines):
 
 random.shuffle(infoGrid)
 discoveryGrid = []
+"""
+_discoveryGrid_ guide:
+0 = Undiscovereed
+1 = Discovered
+"""
+for i in range(len(infoGrid)):
+    discoveryGrid.append(0)
 for i in range(len(infoGrid)):
     if infoGrid[i] != -1:
         continue
@@ -196,6 +203,8 @@ def printGrid():
     thisRow = []
     for i in range(width*height):
         if i == selected:
+            if discoveryGrid[i] == 1:
+                if infoGrid[i] == -1:
                     thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_0_selected))
                 else:
                     if infoGrid[i] == 0:
@@ -216,9 +225,12 @@ def printGrid():
                         thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_7_selected))
                     elif infoGrid[i] == 8:
                         thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_8_selected))
+                    
             else:
-                thisRow.append(Panel(" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.selected))
+                thisRow.append(Panel(" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_selected))
         else:
+            if discoveryGrid[i] == 1:
+                if infoGrid[i] == -1:
                     thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_0_unselected))
                 else:
                     if infoGrid[i] == 0:
@@ -270,3 +282,54 @@ while True:
         selected += 1
         if selected > (width*height)-1:
             selected -= 1
+    elif k == key.ENTER:
+        discoveryGrid[selected] = 1
+        if selected > -1:
+            if str(selected)[-1] != "0":
+                try:
+                    if infoGrid[selected-11] > -1: # Top left
+                        discoveryGrid[selected-11] = 1
+                except:
+                    pass
+            try:
+                if infoGrid[selected-10] > -1: # Top middle
+                    discoveryGrid[selected-10] = 1
+            except:
+                pass
+            if str(selected)[-1] != "9":
+                try:
+                    if infoGrid[selected-9]> -1: # Top right
+                        discoveryGrid[i-9] = 1
+                except:
+                    pass
+            
+            if str(selected)[-1] != "0":
+                try:
+                    if infoGrid[selected-1]> -1: # Middle left
+                        discoveryGrid[selected-1] = 1
+                except:
+                    pass
+            if str(selected)[-1] != "9":
+                try:
+                    if infoGrid[selected+1 ]> -1: # Middle right
+                        discoveryGrid[selected+1] = 1
+                except:
+                    pass
+            
+            if str(selected)[-1] != "0":
+                try:
+                    if infoGrid[selected+11] > -1: # Bottom left
+                        discoveryGrid[selected+11] = 1
+                except:
+                    pass
+            try:
+                if infoGrid[selected+10] > -1: # Bottom middle
+                    discoveryGrid[selected+10] + 1
+            except:
+                pass
+            if str(selected)[-1] != "9":
+                try:
+                    if infoGrid[selected+9]> -1: # Bottom right
+                        discoveryGrid[selected+9] = 1
+                except:
+                    pass

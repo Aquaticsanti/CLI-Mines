@@ -3,6 +3,7 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
 from readchar import key, readkey
+import random
 import time
 
 
@@ -84,6 +85,20 @@ def printTitle():
 print("\n\n\n\n") """
 
 width += 1 # I know this is weird, but else 9x9 doesn't look square
+"""
+_infoGrid_ guide:
+-1 = Mine
+" " = Empty
+1 - 8 = n mines around cell
+"""
+infoGrid = [] # List that holds what cells are what
+for i in range(width*height):
+    infoGrid.append(0)
+for i in range(mines):
+    infoGrid.pop(0)
+    infoGrid.append(-1)
+
+random.shuffle(infoGrid)
 def printGrid():
     global grid, fullGrid, thisRow, width, height, selected
     grid = Table.grid()
@@ -91,9 +106,15 @@ def printGrid():
     thisRow = []
     for i in range(width*height):
         if i == selected:
-            thisRow.append(Panel(f"{i}", box=box.SQUARE, width=6, height=3, style="#808080 on white"))
+            if infoGrid[i] == -1:
+                thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style="#808080 on white"))
+            else:
+                thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style="#808080 on white"))
         else:
-            thisRow.append(Panel(f"{i}", box=box.SQUARE, width=6, height=3, style="white on #808080"))
+            if infoGrid[i] == -1:
+                thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style="white on #808080"))
+            else:
+                thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style="white on #808080"))
         if len(thisRow) == width:
             fullGrid.append(thisRow)
             grid.add_row(*thisRow)
@@ -108,7 +129,7 @@ while True:
     k = readkey()
     if k == key.DOWN:
         selected += 10
-        if selected > (height*10)-10:
+        if selected >= (height*10):
             selected -= 10
     elif k == key.UP:
         selected -= 10

@@ -196,17 +196,51 @@ def printGrid():
     thisRow = []
     for i in range(width*height):
         if i == selected:
-                    thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.selected))
+                    thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_0_selected))
                 else:
-                    thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.selected))
+                    if infoGrid[i] == 0:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_0_selected))
+                    elif infoGrid[i] == 1:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_1_selected))
+                    elif infoGrid[i] == 2:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_2_selected))
+                    elif infoGrid[i] == 3:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_3_selected))
+                    elif infoGrid[i] == 4:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_4_selected))
+                    elif infoGrid[i] == 5:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_5_selected))
+                    elif infoGrid[i] == 6:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_6_selected))
+                    elif infoGrid[i] == 7:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_7_selected))
+                    elif infoGrid[i] == 8:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_8_selected))
             else:
                 thisRow.append(Panel(" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.selected))
         else:
-                    thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.unselected))
+                    thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_0_unselected))
                 else:
-                    thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.unselected))
+                    if infoGrid[i] == 0:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_0_unselected))
+                    elif infoGrid[i] == 1:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_1_unselected))
+                    elif infoGrid[i] == 2:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_2_unselected))
+                    elif infoGrid[i] == 3:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_3_unselected))
+                    elif infoGrid[i] == 4:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_4_unselected))
+                    elif infoGrid[i] == 5:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_5_unselected))
+                    elif infoGrid[i] == 6:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_6_unselected))
+                    elif infoGrid[i] == 7:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_7_unselected))
+                    elif infoGrid[i] == 8:
+                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_8_unselected))
             else:
-                thisRow.append(Panel(f" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.unselected))
+                thisRow.append(Panel(f" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_unselected))
 
         if len(thisRow) == width:
             fullGrid.append(thisRow)

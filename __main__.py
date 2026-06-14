@@ -11,26 +11,52 @@ height = 9
 mines = 10
 
 console = Console()
-
+selected = 0
 def printTitle():
-    global console, width, height, mines
+    global console, width, height, mines, selected
     console.print("""
 █▀▀█  █    ▀█▀      █▀▄▀█  ▀  █▀▀▄ █▀▀ █▀▀ 
 █     █     █   ▀▀  █ █ █ ▀█▀ █  █ █▀▀ ▀▀█ 
 █▄▄█  █▄▄█ ▄█▄      █   █ ▀▀▀ ▀  ▀ ▀▀▀ ▀▀▀ \n\n"""
                 , style="bold default on default", justify="center")
     
-    console.print(f" Width  = {width}", justify="center")
-    console.print(f" Height = {height}", justify="center")
-    console.print(f" Mines  = {mines}", justify="center")
-    console.print("""
-╔════════════════╗
-║     [bold]Start![/bold]     ║
+    if selected == 1:
+        console.print(f" Width  = {width}", justify="center", style="black on white")
+    else:
+        console.print(f" Width  = {width}", justify="center")
+    if selected == 2:
+        console.print(f" Height = {height}", justify="center", style="black on white")
+    else:
+        console.print(f" Height = {height}", justify="center")
+    if selected == 3:
+        console.print(f" Mines  = {mines}", justify="center", style="black on white")
+    else:
+        console.print(f" Mines  = {mines}", justify="center")
+    print("\n")
+    if selected == 4:
+        console.print("""╔════════════════╗
+║     Start!     ║
+╚════════════════╝""", markup=True, justify="center", style="black on white")
+    else:
+        console.print("""╔════════════════╗
+║     Start!     ║
 ╚════════════════╝""", markup=True, justify="center")
 
 
 
-printTitle()
+while True:
+    printTitle()
+    print("\033[15A")
+    k = readkey()
+    if k == key.DOWN:
+        selected += 1
+        if selected > 4:
+            selected = 1
+    if k == key.UP:
+        selected -= 1
+        if selected < 1:
+            selected = 4
+    
 
 # For later!
 #table = Table(title="", box=box.SQUARE, show_lines=True)

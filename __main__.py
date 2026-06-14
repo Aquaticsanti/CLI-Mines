@@ -15,8 +15,36 @@ mines = 10
 
 # Style definition
 class styles:
-    selected = Style.parse("#808080 on white")
-    unselected = Style.parse("white on #808080")
+    hidden_selected = Style.parse("#606060 on white")
+    hidden_unselected = Style.parse("white on #606060")
+    
+    shown_0_selected = Style.parse("#808080 on white")
+    shown_0_unselected = Style.parse("white on #808080")
+
+    shown_1_selected = Style.parse("#808080 on blue")
+    shown_1_unselected = Style.parse("blue on #808080")
+
+    shown_2_selected = Style.parse("#808080 on green")
+    shown_2_unselected = Style.parse("green on #808080")
+
+    shown_3_selected = Style.parse("#808080 on red")
+    shown_3_unselected = Style.parse("red on #808080")
+
+    shown_4_selected = Style.parse("#808080 on purple")
+    shown_4_unselected = Style.parse("purple on #808080")
+
+    shown_5_selected = Style.parse("#808080 on #550000")
+    shown_5_unselected = Style.parse("#550000 on #808080")
+
+    shown_6_selected = Style.parse("#808080 on cyan")
+    shown_6_unselected = Style.parse("cyan on #808080")
+
+    shown_7_selected = Style.parse("#808080 on black")
+    shown_7_unselected = Style.parse("black on #808080")
+
+    shown_8_selected = Style.parse("#808080 on #909090")
+    shown_8_unselected = Style.parse("#909090 on #808080")
+
 
 
 console = Console()

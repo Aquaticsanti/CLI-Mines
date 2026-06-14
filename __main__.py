@@ -88,7 +88,7 @@ width += 1 # I know this is weird, but else 9x9 doesn't look square
 """
 _infoGrid_ guide:
 -1 = Mine
-" " = Empty
+0 = Empty
 1 - 8 = n mines around cell
 """
 infoGrid = [] # List that holds what cells are what
@@ -99,6 +99,58 @@ for i in range(mines):
     infoGrid.append(-1)
 
 random.shuffle(infoGrid)
+for i in range(len(infoGrid)):
+    if infoGrid[i] != -1:
+        continue
+    else:
+        if str(infoGrid[i])[-1] != "0":
+            try:
+                if infoGrid[i-11] > -1: # Top left
+                    infoGrid[i-11] += 1
+            except:
+                pass
+        try:
+            if infoGrid[i-10] > -1: # Top middle
+                infoGrid[i-10] += 1
+        except:
+            pass
+        if str(infoGrid[i])[-1] != "9":
+            try:
+                if infoGrid[i-9] > -1: # Top right
+                    infoGrid[i-9] += 1
+            except:
+                pass
+        
+        if str(infoGrid[i])[-1] != "0":
+            try:
+                if infoGrid[i-1] > -1: # Middle left
+                    infoGrid[i-1] += 1
+            except:
+                pass
+        if str(infoGrid[i])[-1] != "9":
+            try:
+                if infoGrid[i+1] > -1: # Middle right
+                    infoGrid[i+1] += 1
+            except:
+                pass
+        
+        if str(infoGrid[i])[-1] != "0":
+            try:
+                if infoGrid[i+11] > -1: # Bottom left
+                    infoGrid[i+11] += 1
+            except:
+                pass
+        try:
+            if infoGrid[i+10] > -1: # Bottom middle
+                infoGrid[i+10] += 1
+        except:
+            pass
+        if str(infoGrid[i])[-1] != "9":
+            try:
+                if infoGrid[i+9] > -1: # Bottom right
+                    infoGrid[i+9] += 1
+            except:
+                pass
 def printGrid():
     global grid, fullGrid, thisRow, width, height, selected
     grid = Table.grid()
@@ -143,9 +195,3 @@ while True:
         selected += 1
         if selected > (width*height)-1:
             selected -= 1
-
-
-
-
-
- 

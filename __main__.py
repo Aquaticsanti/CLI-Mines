@@ -2,15 +2,22 @@ from rich import box
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
+from rich.style import Style
 from readchar import key, readkey
 import random
 import time
 
 
-
+# Default values definition
 width = 9
 height = 9
 mines = 10
+
+# Style definition
+class styles:
+    selected = Style.parse("#808080 on white")
+    unselected = Style.parse("white on #808080")
+
 
 console = Console()
 selected = 0
@@ -101,6 +108,7 @@ for i in range(mines):
     infoGrid.append(-1)
 
 random.shuffle(infoGrid)
+discoveryGrid = []
 for i in range(len(infoGrid)):
     if infoGrid[i] != -1:
         continue
@@ -160,15 +168,18 @@ def printGrid():
     thisRow = []
     for i in range(width*height):
         if i == selected:
-            if infoGrid[i] == -1:
-                thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style="#808080 on white"))
+                    thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.selected))
+                else:
+                    thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.selected))
             else:
-                thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style="#808080 on white"))
+                thisRow.append(Panel(" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.selected))
         else:
-            if infoGrid[i] == -1:
-                thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style="white on #808080"))
+                    thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.unselected))
+                else:
+                    thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.unselected))
             else:
-                thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style="white on #808080"))
+                thisRow.append(Panel(f" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.unselected))
+
         if len(thisRow) == width:
             fullGrid.append(thisRow)
             grid.add_row(*thisRow)

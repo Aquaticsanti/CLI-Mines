@@ -84,7 +84,7 @@ def printTitle():
 
 print("\n\n\n\n") """
 
-width += 1 # I know this is weird, but else 9x9 doesn't look square
+
 """
 _infoGrid_ guide:
 -1 = Mine

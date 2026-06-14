@@ -17,8 +17,9 @@ def printTitle():
     console.print("""
 █▀▀█  █    ▀█▀      █▀▄▀█  ▀  █▀▀▄ █▀▀ █▀▀ 
 █     █     █   ▀▀  █ █ █ ▀█▀ █  █ █▀▀ ▀▀█ 
-█▄▄█  █▄▄█ ▄█▄      █   █ ▀▀▀ ▀  ▀ ▀▀▀ ▀▀▀ \n\n"""
+█▄▄█  █▄▄█ ▄█▄      █   █ ▀▀▀ ▀  ▀ ▀▀▀ ▀▀▀ """
                 , style="bold default on default", justify="center")
+    console.print("Made with :red_heart-emoji:  by @Aquaticsanti\n\n", style="bold default on default", justify="center")
     
     if selected == 1:
         console.print(f" Width  = {width}", justify="center", style="black on white")
@@ -45,18 +46,39 @@ def printTitle():
 
 
 while True:
+    print("\033[16A")
     printTitle()
-    print("\033[15A")
     k = readkey()
     if k == key.DOWN:
         selected += 1
         if selected > 4:
             selected = 1
-    if k == key.UP:
+    elif k == key.UP:
         selected -= 1
         if selected < 1:
             selected = 4
-    
+    elif k == key.LEFT:
+        if selected == 1:
+            width -= 1
+            if width < 1:
+                width += 1
+        elif selected == 2:
+            height -= 1
+            if height < 1:
+                height += 1
+        elif selected == 3:
+            mines -= 1
+            if mines < 1:
+                mines += 1
+    elif k == key.RIGHT:
+        if selected == 1:
+            width += 1
+        elif selected == 2:
+            height += 1
+        elif selected == 3:
+            mines += 1
+    elif k == key.ENTER and selected == 4:
+        break
 
 # For later!
 #table = Table(title="", box=box.SQUARE, show_lines=True)

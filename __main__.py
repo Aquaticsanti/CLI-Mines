@@ -18,32 +18,29 @@ class styles:
     hidden_selected = Style.parse("#606060 on white")
     hidden_unselected = Style.parse("white on #606060")
 
-    shown_0_selected = Style.parse("#808080 on white")
-    shown_0_unselected = Style.parse("white on #808080")
+    shown_selected = {
+        0: Style.parse("#808080 on white"),
+        1: Style.parse("#808080 on blue"),
+        2: Style.parse("#808080 on green"),
+        3: Style.parse("#808080 on red"),
+        4: Style.parse("#808080 on purple"),
+        5: Style.parse("#808080 on #550000"),
+        6: Style.parse("#808080 on cyan"),
+        7: Style.parse("#808080 on black"),
+        8: Style.parse("#808080 on #909090")
+    }
 
-    shown_1_selected = Style.parse("#808080 on blue")
-    shown_1_unselected = Style.parse("blue on #808080")
-
-    shown_2_selected = Style.parse("#808080 on green")
-    shown_2_unselected = Style.parse("green on #808080")
-
-    shown_3_selected = Style.parse("#808080 on red")
-    shown_3_unselected = Style.parse("red on #808080")
-
-    shown_4_selected = Style.parse("#808080 on purple")
-    shown_4_unselected = Style.parse("purple on #808080")
-
-    shown_5_selected = Style.parse("#808080 on #550000")
-    shown_5_unselected = Style.parse("#550000 on #808080")
-
-    shown_6_selected = Style.parse("#808080 on cyan")
-    shown_6_unselected = Style.parse("cyan on #808080")
-
-    shown_7_selected = Style.parse("#808080 on black")
-    shown_7_unselected = Style.parse("black on #808080")
-
-    shown_8_selected = Style.parse("#808080 on #909090")
-    shown_8_unselected = Style.parse("#909090 on #808080")
+    shown_unselected = {
+        0: Style.parse("white on #808080"),
+        1: Style.parse("blue on #808080"),
+        2: Style.parse("green on #808080"),
+        3: Style.parse("red on #808080"),
+        4: Style.parse("purple on #808080"),
+        5: Style.parse("#550000 on #808080"),
+        6: Style.parse("cyan on #808080"),
+        7: Style.parse("black on #808080"),
+        8: Style.parse("#909090 on #808080")
+    }
 
 
 
@@ -119,217 +116,205 @@ def printTitle():
 
 print("\n\n\n\n") """
 
-
 """
 _infoGrid_ guide:
 -1 = Mine
 0 = Empty
 1 - 8 = n mines around cell
 """
-width += 1 # I know this is weird, but else 9x9 doesn't look square. Was going to remove it but then everything else broke
+infoGrid = np.zeros((width, height), dtype=int) # Array that holds what cells are what
+flat = infoGrid.flatten() # make a copy as a 1D array
+flat[-10:] = -1
+np.random.shuffle(flat)
+infoGrid = flat.reshape(width, height)
+for i in range(width):
+    for j in range(height):
+        if infoGrid[(i, j)] != -1:
+            pass
+        else:
+            try:
+                if infoGrid[(i, j+1)] > -1:
+                    infoGrid[(i, j+1)] += 1
+            except:
+                pass
+            try:
+                if infoGrid[(i, j-1)] > -1:
+                    infoGrid[(i, j-1)] += 1
+            except:
+                pass
+            try:
+                if infoGrid[(i+1, j)] > -1:
+                    infoGrid[(i+1, j)] += 1
+            except:
+                pass
+            try:
+                if infoGrid[(i-1, j)] > -1:
+                    infoGrid[(i-1, j)] += 1
+            except:
+                pass
+            try:
+                if infoGrid[(i-1, j-1)] > -1:
+                    infoGrid[(i-1, j-1)] += 1
+            except:
+                pass
+            try:
+                if infoGrid[(i+1, j+1)] > -1:
+                    infoGrid[(i+1, j+1)] += 1
+            except:
+                pass
+            try:
+                if infoGrid[(i+1, j-1)] > -1:
+                    infoGrid[(i+1, j-1)] += 1
+            except:
+                pass
+            try:
+                if infoGrid[(i-1, j+1)] > -1:
+                    infoGrid[(i-1, j+1)] += 1
+            except:
+                pass
 
-infoGrid = [] # List that holds what cells are what
-for i in range(width*height):
-    infoGrid.append(0)
-for i in range(mines):
-    infoGrid.pop(0)
-    infoGrid.append(-1)
 
-random.shuffle(infoGrid)
-discoveryGrid = []
 """
 _discoveryGrid_ guide:
 0 = Undiscovereed
 1 = Discovered
 """
-for i in range(len(infoGrid)):
-    discoveryGrid.append(0)
-for i in range(len(infoGrid)):
-    if infoGrid[i] != -1:
-        continue
-    else:
-        if str(infoGrid[i])[-1] != "0":
-            try:
-                if infoGrid[i-11] > -1: # Top left
-                    infoGrid[i-11] += 1
-            except:
-                pass
-        try:
-            if infoGrid[i-10] > -1: # Top middle
-                infoGrid[i-10] += 1
-        except:
-            pass
-        if str(infoGrid[i])[-1] != "9":
-            try:
-                if infoGrid[i-9] > -1: # Top right
-                    infoGrid[i-9] += 1
-            except:
-                pass
-        
-        if str(infoGrid[i])[-1] != "0":
-            try:
-                if infoGrid[i-1] > -1: # Middle left
-                    infoGrid[i-1] += 1
-            except:
-                pass
-        if str(infoGrid[i])[-1] != "9":
-            try:
-                if infoGrid[i+1] > -1: # Middle right
-                    infoGrid[i+1] += 1
-            except:
-                pass
-        
-        if str(infoGrid[i])[-1] != "0":
-            try:
-                if infoGrid[i+11] > -1: # Bottom left
-                    infoGrid[i+11] += 1
-            except:
-                pass
-        try:
-            if infoGrid[i+10] > -1: # Bottom middle
-                infoGrid[i+10] += 1
-        except:
-            pass
-        if str(infoGrid[i])[-1] != "9":
-            try:
-                if infoGrid[i+9] > -1: # Bottom right
-                    infoGrid[i+9] += 1
-            except:
-                pass
-def printGrid():
-    global grid, fullGrid, thisRow, width, height, selected
-    grid = Table.grid()
-    fullGrid = []
-    thisRow = []
-    for i in range(width*height):
-        if i == selected:
-            if discoveryGrid[i] == 1:
-                if infoGrid[i] == -1:
-                    thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_0_selected))
-                else:
-                    if infoGrid[i] == 0:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_0_selected))
-                    elif infoGrid[i] == 1:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_1_selected))
-                    elif infoGrid[i] == 2:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_2_selected))
-                    elif infoGrid[i] == 3:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_3_selected))
-                    elif infoGrid[i] == 4:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_4_selected))
-                    elif infoGrid[i] == 5:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_5_selected))
-                    elif infoGrid[i] == 6:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_6_selected))
-                    elif infoGrid[i] == 7:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_7_selected))
-                    elif infoGrid[i] == 8:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_8_selected))
-                    
-            else:
-                thisRow.append(Panel(" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_selected))
-        else:
-            if discoveryGrid[i] == 1:
-                if infoGrid[i] == -1:
-                    thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_0_unselected))
-                else:
-                    if infoGrid[i] == 0:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_0_unselected))
-                    elif infoGrid[i] == 1:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_1_unselected))
-                    elif infoGrid[i] == 2:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_2_unselected))
-                    elif infoGrid[i] == 3:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_3_unselected))
-                    elif infoGrid[i] == 4:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_4_unselected))
-                    elif infoGrid[i] == 5:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_5_unselected))
-                    elif infoGrid[i] == 6:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_6_unselected))
-                    elif infoGrid[i] == 7:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_7_unselected))
-                    elif infoGrid[i] == 8:
-                        thisRow.append(Panel(f"{infoGrid[i]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_8_unselected))
-            else:
-                thisRow.append(Panel(f" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_unselected))
+discoveryGrid = np.zeros((width, height), dtype=int) # Array that holds which cells have been revealed
 
-        if len(thisRow) == width:
-            fullGrid.append(thisRow)
-            grid.add_row(*thisRow)
-            thisRow = []
+
+
+
+def printGrid():
+    global grid, thisRow, width, height, selected
+    thisRow = []
+    grid = Table.grid()
+    for x in range(height):
+        for y in range(width):
+            if selected == (y, x):
+                if discoveryGrid[(y, x)] == 1:
+                    if infoGrid[(y, x)] == -1:
+                        thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_selected[0]))
+                    else:
+                        thisRow.append(Panel(f"{infoGrid[(y, x)]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_selected[infoGrid[(y, x)]]))
+                else:
+                    thisRow.append(Panel(" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_selected))
+            else:
+                if discoveryGrid[(y, x)] == 1:
+                    if infoGrid[(y, x)] == -1:
+                        thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_unselected[0]))
+                    else:
+                        thisRow.append(Panel(f"{infoGrid[(y, x)]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_unselected[infoGrid[(y, x)]]))
+                else:
+                    thisRow.append(Panel(" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_unselected))
+        grid.add_row(*thisRow)
+        thisRow = []
     console.print(grid, justify="center")
 
 
-selected = 0
+def discover_and_adjacents(y, x):
+    global discoveryGrid, infoGrid
+    discoveryGrid[(y, x)] = 1
+    if infoGrid[(y, x)] > -1 and infoGrid[(y, x)] < 1:
+        try:
+            if infoGrid[((y, x)[0], (y, x)[1]+1)] > -1:
+                discoveryGrid[((y, x)[0], (y, x)[1]+1)] = 1
+        except:
+            pass
+        try:
+            if infoGrid[((y, x)[0], (y, x)[1]-1)] > -1:
+                discoveryGrid[((y, x)[0], (y, x)[1]-1)] = 1
+        except:
+            pass
+        try:
+            if infoGrid[((y, x)[0]+1, (y, x)[1])] > -1:
+                discoveryGrid[((y, x)[0]+1, (y, x)[1])] = 1
+        except:
+            pass
+        try:
+            if infoGrid[((y, x)[0]-1, (y, x)[1])] > -1:
+                discoveryGrid[((y, x)[0]-1, (y, x)[1])] = 1
+        except:
+            pass
+        try:
+            if infoGrid[((y, x)[0]-1, (y, x)[1]-1)] > -1:
+                discoveryGrid[((y, x)[0]-1, (y, x)[1]-1)] = 1
+        except:
+            pass
+        try:
+            if infoGrid[((y, x)[0]+1, (y, x)[1]+1)] > -1:
+                discoveryGrid[((y, x)[0]+1, (y, x)[1]+1)] = 1
+        except:
+            pass
+        try:
+            if infoGrid[((y, x)[0]+1, (y, x)[1]-1)] > -1:
+                discoveryGrid[((y, x)[0]+1, (y, x)[1]-1)] = 1
+        except:
+            pass
+        try:
+            if infoGrid[((y, x)[0]-1, (y, x)[1]+1)] > -1:
+                discoveryGrid[((y, x)[0]-1, (y, x)[1]+1)] = 1
+        except:
+            pass
+selected = (0, 0)
 while True:
-    print(f"\033[{(height*3)+1}A")
+    print(f"\033[{(width*3)+1}A")
     printGrid()
     k = readkey()
-    if k == key.DOWN:
-        selected += 10
-        if selected >= (height*10):
-            selected -= 10
-    elif k == key.UP:
-        selected -= 10
-        if selected < 0:
-            selected += 10
+    if k == key.RIGHT:
+        selected = (selected[0]+1, selected[1])
+        if selected[0] > width-1:
+            selected = (selected[0]-1, selected[1])
     elif k == key.LEFT:
-        selected -= 1
-        if selected < 0:
-            selected += 1
-    elif k == key.RIGHT:
-        selected += 1
-        if selected > (width*height)-1:
-            selected -= 1
+        selected = (selected[0]-1, selected[1])
+        if selected[0] < 0:
+            selected = (selected[0]+1, selected[1])
+    elif k == key.UP:
+        selected = (selected[0], selected[1]-1)
+        if selected[1] < 0:
+            selected = (selected[0], selected[1]+1)
+    elif k == key.DOWN:
+        selected = (selected[0], selected[1]+1)
+        if selected[1] > height-1:
+            selected = (selected[0], selected[1]-1)
     elif k == key.ENTER:
-        discoveryGrid[selected] = 1
-        if selected > -1: # So if it ISN'T a mine
-            if str(selected)[-1] != "0": # If the square isn't in the left border in a 9x9 grid
-                try:
-                    if infoGrid[selected-11] > -1: # Top left
-                        discoveryGrid[selected-11] = 1 # Set tile to discovered
-                except IndexError:
-                    pass
-            try:
-                if infoGrid[selected-10] > -1: # Top middle
-                    discoveryGrid[selected-10] = 1 # Set tile to discovered
-            except IndexError:
-                pass
-            if str(selected)[-1] != "9": # If the square isn't in the right border in a 9x9 grid
-                try:
-                    if infoGrid[selected-9]> -1: # Top right
-                        discoveryGrid[i-9] = 1 # Set tile to discovered
-                except IndexError:
-                    pass
-            
-            if str(selected)[-1] != "0": # If the square isn't in the left border in a 9x9 grid
-                try:
-                    if infoGrid[selected-1]> -1: # Middle left
-                        discoveryGrid[selected-1] = 1 # Set tile to discovered
-                except IndexError:
-                    pass
-            if str(selected)[-1] != "9": # If the square isn't in the right border in a 9x9 grid
-                try:
-                    if infoGrid[selected+1 ]> -1: # Middle right
-                        discoveryGrid[selected+1] = 1 # Set tile to discovered
-                except IndexError:
-                    pass
-            
-            if str(selected)[-1] != "0": # If the square isn't in the left border in a 9x9 grid
-                try:
-                    if infoGrid[selected+11] > -1: # Bottom left
-                        discoveryGrid[selected+11] = 1 # Set tile to discovered
-                except IndexError:
-                    pass
-            try:
-                if infoGrid[selected+10] > -1: # Bottom middle
-                    discoveryGrid[selected+10] + 1 # Set tile to discovered
-            except IndexError:
-                pass
-            if str(selected)[-1] != "9": # If the square isn't in the right border in a 9x9 grid
-                try:
-                    if infoGrid[selected+9]> -1: # Bottom right
-                        discoveryGrid[selected+9] = 1# Set tile to discovered
-                except IndexError:
-                    pass
+        discover_and_adjacents(selected[0], selected[1])
+        try:
+            if infoGrid[(selected[0], selected[1]+1)] > -1:
+                discover_and_adjacents(selected[0], selected[1]+1)
+        except:
+            pass
+        try:
+            if infoGrid[(selected[0], selected[1]-1)] > -1:
+                discover_and_adjacents(selected[0], selected[1]-1)
+        except:
+            pass
+        try:
+            if infoGrid[(selected[0]+1, selected[1])] > -1:
+                discover_and_adjacents(selected[0]+1, selected[1])
+        except:
+            pass
+        try:
+            if infoGrid[(selected[0]-1, selected[1])] > -1:
+                discover_and_adjacents(selected[0]-1, selected[1])
+        except:
+            pass
+        try:
+            if infoGrid[(selected[0]-1, selected[1]-1)] > -1:
+                discover_and_adjacents(selected[0]-1, selected[1]-1)
+        except:
+            pass
+        try:
+            if infoGrid[(selected[0]+1, selected[1]+1)] > -1:
+                discover_and_adjacents(selected[0]+1, selected[1]+1)
+        except:
+            pass
+        try:
+            if infoGrid[(selected[0]+1, selected[1]-1)] > -1:
+                discover_and_adjacents(selected[0]+1, selected[1]-1)
+        except:
+            pass
+        try:
+            if infoGrid[(selected[0]-1, selected[1]+1)] > -1:
+                discover_and_adjacents(selected[0]-1, selected[1]+1)
+        except:
+            pass

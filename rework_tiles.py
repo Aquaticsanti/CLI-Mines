@@ -10,8 +10,8 @@ import numpy as np
 
 
 # Default values definition
-width = 9
 height = 9
+width = 9
 mines = 10
 
 # Style definition
@@ -46,7 +46,6 @@ class styles:
 
 
 console = Console()
-selected = 0
 
 """
 _infoGrid_ guide:
@@ -58,9 +57,9 @@ infoGrid = np.zeros((width, height), dtype=int) # Array that holds what cells ar
 flat = infoGrid.flatten() # make a copy as a 1D array
 flat[-10:] = -1
 np.random.shuffle(flat)
-infoGrid = flat.reshape(9, 9)
-for i in range(height):
-    for j in range(width):
+infoGrid = flat.reshape(width, height)
+for i in range(width):
+    for j in range(height):
         if infoGrid[(i, j)] != -1:
             pass
         else:
@@ -104,7 +103,6 @@ for i in range(height):
                     infoGrid[(i-1, j+1)] += 1
             except:
                 pass
-print(infoGrid)
 
 
 """
@@ -112,7 +110,6 @@ _discoveryGrid_ guide:
 0 = Undiscovereed
 1 = Discovered
 """
-
 discoveryGrid = np.zeros((width, height), dtype=int) # Array that holds which cells have been revealed
 
 
@@ -122,22 +119,22 @@ def printGrid():
     global grid, thisRow, width, height, selected
     thisRow = []
     grid = Table.grid()
-    for x in range(width):
-        for y in range(height):
-            if selected == (x, y):
-                if discoveryGrid[(x, y)] == 1:
-                    if infoGrid[(x, y)] == -1:
+    for x in range(height):
+        for y in range(width):
+            if selected == (y, x):
+                if discoveryGrid[(y, x)] == 1:
+                    if infoGrid[(y, x)] == -1:
                         thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_selected[0]))
                     else:
-                        thisRow.append(Panel(f"{infoGrid[(x, y)]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_selected[infoGrid[(x, y)]]))
+                        thisRow.append(Panel(f"{infoGrid[(y, x)]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_selected[infoGrid[(y, x)]]))
                 else:
                     thisRow.append(Panel(" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_selected))
             else:
-                if discoveryGrid[(x, y)] == 1:
-                    if infoGrid[(x, y)] == -1:
+                if discoveryGrid[(y, x)] == 1:
+                    if infoGrid[(y, x)] == -1:
                         thisRow.append(Panel("✴", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_unselected[0]))
                     else:
-                        thisRow.append(Panel(f"{infoGrid[(x, y)]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_unselected[infoGrid[(x, y)]]))
+                        thisRow.append(Panel(f"{infoGrid[(y, x)]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_unselected[infoGrid[(y, x)]]))
                 else:
                     thisRow.append(Panel(" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_unselected))
         grid.add_row(*thisRow)
@@ -147,25 +144,25 @@ def printGrid():
 
 selected = (0, 0)
 while True:
-    print(f"\033[{(height*3)+1}A")
+    print(f"\033[{(width*3)+1}A")
     printGrid()
     k = readkey()
-    if k == key.DOWN:
+    if k == key.RIGHT:
         selected = (selected[0]+1, selected[1])
-        """ if selected >= (height*10):
-            selected -= 10 """
-    elif k == key.UP:
-        selected = (selected[0]-1, selected[1])
-        """ if selected < 0:
-            selected += 10 """
+        if selected[0] > width-1:
+            selected = (selected[0]-1, selected[1])
     elif k == key.LEFT:
+        selected = (selected[0]-1, selected[1])
+        if selected[0] < 0:
+            selected = (selected[0]+1, selected[1])
+    elif k == key.UP:
         selected = (selected[0], selected[1]-1)
-        """ if selected < 0:
-            selected += 1 """
-    elif k == key.RIGHT:
+        if selected[1] < 0:
+            selected = (selected[0], selected[1]+1)
+    elif k == key.DOWN:
         selected = (selected[0], selected[1]+1)
-        """ if selected > (width*height)-1:
-            selected -= 1 """
+        if selected[1] > height-1:
+            selected = (selected[0], selected[1]-1)
     """ elif k == key.ENTER:
         discoveryGrid[selected] = 1
         if selected > -1: # So if it ISN'T a mine

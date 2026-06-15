@@ -7,7 +7,10 @@ from readchar import key, readkey
 import random
 import time
 import numpy as np
+import os
 
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
 
 # Default values definition
 width = 9
@@ -81,7 +84,7 @@ def printTitle():
 
 
 while True:
-    print("\033[16A")
+    cls()
     printTitle()
     k = readkey()
     if k == key.DOWN:
@@ -115,7 +118,6 @@ while True:
     elif k == key.ENTER and selected == 4:
         break
 
-print("\n\n\n\n")
 
 """
 _infoGrid_ guide:
@@ -259,7 +261,7 @@ def discover_and_adjacents(y, x):
 
 selected = (0, 0)
 while True:
-    print(f"\033[{(width*3)+1}A")
+    cls()
     printGrid()
     k = readkey()
     if k == key.RIGHT:

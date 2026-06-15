@@ -284,52 +284,52 @@ while True:
             selected -= 1
     elif k == key.ENTER:
         discoveryGrid[selected] = 1
-        if selected > -1:
-            if str(selected)[-1] != "0":
+        if selected > -1: # So if it ISN'T a mine
+            if str(selected)[-1] != "0": # If the square isn't in the left border in a 9x9 grid
                 try:
                     if infoGrid[selected-11] > -1: # Top left
-                        discoveryGrid[selected-11] = 1
-                except:
+                        discoveryGrid[selected-11] = 1 # Set tile to discovered
+                except IndexError:
                     pass
             try:
                 if infoGrid[selected-10] > -1: # Top middle
-                    discoveryGrid[selected-10] = 1
-            except:
+                    discoveryGrid[selected-10] = 1 # Set tile to discovered
+            except IndexError:
                 pass
-            if str(selected)[-1] != "9":
+            if str(selected)[-1] != "9": # If the square isn't in the right border in a 9x9 grid
                 try:
                     if infoGrid[selected-9]> -1: # Top right
-                        discoveryGrid[i-9] = 1
-                except:
+                        discoveryGrid[i-9] = 1 # Set tile to discovered
+                except IndexError:
                     pass
             
-            if str(selected)[-1] != "0":
+            if str(selected)[-1] != "0": # If the square isn't in the left border in a 9x9 grid
                 try:
                     if infoGrid[selected-1]> -1: # Middle left
-                        discoveryGrid[selected-1] = 1
-                except:
+                        discoveryGrid[selected-1] = 1 # Set tile to discovered
+                except IndexError:
                     pass
-            if str(selected)[-1] != "9":
+            if str(selected)[-1] != "9": # If the square isn't in the right border in a 9x9 grid
                 try:
                     if infoGrid[selected+1 ]> -1: # Middle right
-                        discoveryGrid[selected+1] = 1
-                except:
+                        discoveryGrid[selected+1] = 1 # Set tile to discovered
+                except IndexError:
                     pass
             
-            if str(selected)[-1] != "0":
+            if str(selected)[-1] != "0": # If the square isn't in the left border in a 9x9 grid
                 try:
                     if infoGrid[selected+11] > -1: # Bottom left
-                        discoveryGrid[selected+11] = 1
-                except:
+                        discoveryGrid[selected+11] = 1 # Set tile to discovered
+                except IndexError:
                     pass
             try:
                 if infoGrid[selected+10] > -1: # Bottom middle
-                    discoveryGrid[selected+10] + 1
-            except:
+                    discoveryGrid[selected+10] + 1 # Set tile to discovered
+            except IndexError:
                 pass
-            if str(selected)[-1] != "9":
+            if str(selected)[-1] != "9": # If the square isn't in the right border in a 9x9 grid
                 try:
                     if infoGrid[selected+9]> -1: # Bottom right
-                        discoveryGrid[selected+9] = 1
-                except:
+                        discoveryGrid[selected+9] = 1# Set tile to discovered
+                except IndexError:
                     pass

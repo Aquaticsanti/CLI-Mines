@@ -217,47 +217,123 @@ def printGrid():
 def discover_and_adjacents(y, x):
     global discoveryGrid, infoGrid
     discoveryGrid[(y, x)] = 1
-    if infoGrid[(y, x)] > -1 and infoGrid[(y, x)] < 1:
-        try:
-            if infoGrid[((y, x)[0], (y, x)[1]+1)] > -1:
-                discoveryGrid[((y, x)[0], (y, x)[1]+1)] = 1
-        except:
-            pass
-        try:
-            if infoGrid[((y, x)[0], (y, x)[1]-1)] > -1:
-                discoveryGrid[((y, x)[0], (y, x)[1]-1)] = 1
-        except:
-            pass
-        try:
-            if infoGrid[((y, x)[0]+1, (y, x)[1])] > -1:
-                discoveryGrid[((y, x)[0]+1, (y, x)[1])] = 1
-        except:
-            pass
-        try:
-            if infoGrid[((y, x)[0]-1, (y, x)[1])] > -1:
-                discoveryGrid[((y, x)[0]-1, (y, x)[1])] = 1
-        except:
-            pass
-        try:
-            if infoGrid[((y, x)[0]-1, (y, x)[1]-1)] > -1:
-                discoveryGrid[((y, x)[0]-1, (y, x)[1]-1)] = 1
-        except:
-            pass
-        try:
-            if infoGrid[((y, x)[0]+1, (y, x)[1]+1)] > -1:
-                discoveryGrid[((y, x)[0]+1, (y, x)[1]+1)] = 1
-        except:
-            pass
-        try:
-            if infoGrid[((y, x)[0]+1, (y, x)[1]-1)] > -1:
-                discoveryGrid[((y, x)[0]+1, (y, x)[1]-1)] = 1
-        except:
-            pass
-        try:
-            if infoGrid[((y, x)[0]-1, (y, x)[1]+1)] > -1:
-                discoveryGrid[((y, x)[0]-1, (y, x)[1]+1)] = 1
-        except:
-            pass
+    if infoGrid[(y, x)] == 0:
+        not0counter = 0
+        while True:
+            try:
+                
+                currentNumber = infoGrid[(y, x+1)]
+                print(currentNumber)
+                if infoGrid[(y, x+1)] == 0 and discoveryGrid[(y, x+1)] == 0:
+                    discover_and_adjacents(y, x+1)
+                    discoveryGrid[(y, x+1)] = 1
+                else:
+                    if infoGrid[(y, x+1)] > -1: # If it's not a mine
+                        discoveryGrid[(y, x+1)] = 1
+                    not0counter += 1
+                    break
+            except: # Also if it's out of bounds
+                break
+        while True:
+            try:
+                
+                currentNumber = infoGrid[(y, x-1)]
+                print(currentNumber)
+                if infoGrid[(y, x-1)] == 0 and discoveryGrid[(y, x-1)] == 0:
+                    discover_and_adjacents(y, x-1)
+                else:
+                    if infoGrid[(y, x-1)] > -1: # If it's not a mine
+                        discoveryGrid[(y, x-1)] = 1
+                    not0counter += 1
+                    break
+            except:
+                break
+        while True:
+            try:
+                
+                currentNumber = infoGrid[(y, x+1)]
+                print(currentNumber)
+                if infoGrid[(y+1, x)] == 0 and discoveryGrid[(y+1, x)] == 0:
+                    discover_and_adjacents(y+1, x)
+                else:
+                    if infoGrid[(y+1, x)] > -1: # If it's not a mine
+                        discoveryGrid[(y+1, x)] = 1
+                    not0counter += 1
+                    break
+            except:
+                break
+        while True:
+            try:
+                
+                currentNumber = infoGrid[(y, x+1)]
+                print(currentNumber)
+                if infoGrid[(y-1, x)] == 0 and discoveryGrid[(y-1, x)] == 0:
+                    discover_and_adjacents(y-1, x)
+                else:
+                    if infoGrid[(y-1, x)] > -1: # If it's not a mine
+                        discoveryGrid[(y-1, x)] = 1
+                    not0counter += 1
+                    break
+            except:
+                break
+        while True:
+            try:
+                
+                currentNumber = infoGrid[(y, x+1)]
+                print(currentNumber)
+                if infoGrid[(y-1, x-1)] == 0 and discoveryGrid[(y-1, x-1)] == 0:
+                    discover_and_adjacents(y-1, x-1)
+                else:
+                    if infoGrid[(y-1, x-1)] > -1: # If it's not a mine
+                        discoveryGrid[(y-1, x-1)] = 1
+                    not0counter += 1
+                    break
+            except:
+                break
+        while True:
+            try:
+                
+                currentNumber = infoGrid[(y, x+1)]
+                print(currentNumber)
+                if infoGrid[(y+1, x+1)] == 0 and discoveryGrid[(y+1, x+1)] == 0:
+                    discover_and_adjacents(y+1, x+1)
+                else:
+                    if infoGrid[(y+1, x+1)] > -1: # If it's not a mine
+                        discoveryGrid[(y+1, x+1)] = 1
+                    not0counter += 1
+                    break
+            except:
+                break
+        while True:
+            try:
+                
+                currentNumber = infoGrid[(y, x+1)]
+                print(currentNumber)
+                if infoGrid[(y+1, x-1)] == 0 and discoveryGrid[(y+1, x-1)] == 0:
+                    discover_and_adjacents(y+1, x-1)
+                else:
+                    if infoGrid[(y+1, x-1)] > -1: # If it's not a mine
+                        discoveryGrid[(y+1, x-1)] = 1
+                    not0counter += 1
+                    break
+            except:
+                    break
+        while True:
+            try:
+                
+                currentNumber = infoGrid[(y, x+1)]
+                print(currentNumber)
+                if infoGrid[(y-1, x+1)] == 0 and discoveryGrid[(y-1, x+1)] == 0:
+                    discover_and_adjacents(y-1, x+1)
+                else:
+                    if infoGrid[(y-1, x+1)] > -1: # If it's not a mine
+                        discoveryGrid[(y-1, x+1)] = 1
+                    not0counter += 1
+                    break
+            except:
+                    break
+        if not0counter == 8:
+            return
 
 selected = (0, 0)
 while True:
@@ -282,43 +358,3 @@ while True:
             selected = (selected[0], selected[1]-1)
     elif k == key.ENTER:
         discover_and_adjacents(selected[0], selected[1])
-        try:
-            if infoGrid[(selected[0], selected[1]+1)] > -1:
-                discover_and_adjacents(selected[0], selected[1]+1)
-        except:
-            pass
-        try:
-            if infoGrid[(selected[0], selected[1]-1)] > -1:
-                discover_and_adjacents(selected[0], selected[1]-1)
-        except:
-            pass
-        try:
-            if infoGrid[(selected[0]+1, selected[1])] > -1:
-                discover_and_adjacents(selected[0]+1, selected[1])
-        except:
-            pass
-        try:
-            if infoGrid[(selected[0]-1, selected[1])] > -1:
-                discover_and_adjacents(selected[0]-1, selected[1])
-        except:
-            pass
-        try:
-            if infoGrid[(selected[0]-1, selected[1]-1)] > -1:
-                discover_and_adjacents(selected[0]-1, selected[1]-1)
-        except:
-            pass
-        try:
-            if infoGrid[(selected[0]+1, selected[1]+1)] > -1:
-                discover_and_adjacents(selected[0]+1, selected[1]+1)
-        except:
-            pass
-        try:
-            if infoGrid[(selected[0]+1, selected[1]-1)] > -1:
-                discover_and_adjacents(selected[0]+1, selected[1]-1)
-        except:
-            pass
-        try:
-            if infoGrid[(selected[0]-1, selected[1]+1)] > -1:
-                discover_and_adjacents(selected[0]-1, selected[1]+1)
-        except:
-            pass

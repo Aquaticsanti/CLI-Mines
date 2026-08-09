@@ -139,6 +139,13 @@ _discoveryGrid_ guide:
 """
 discoveryGrid = np.zeros((width, height), dtype=int) # Array that holds which cells have been revealed
 
+"""
+_flagGrid guide:
+0 = Not flagged
+1 = Flagged
+"""
+flagGrid = np.zeros((width, height), dtype=int) # Array that holds which cells have been flagged
+
 def printGrid():
     global grid, thisRow, width, height, selected
     thisRow = []
@@ -152,7 +159,10 @@ def printGrid():
                     else:
                         thisRow.append(Panel(f"{infoGrid[(y, x)]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_selected[infoGrid[(y, x)]]))
                 else:
-                    thisRow.append(Panel(" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_selected))
+                    if flagGrid[(y, x)] == 1:
+                        thisRow.append(Panel("🚩", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_selected))
+                    else:
+                        thisRow.append(Panel(" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_selected))
             else:
                 if discoveryGrid[(y, x)] == 1:
                     if infoGrid[(y, x)] == -1:
@@ -160,7 +170,10 @@ def printGrid():
                     else:
                         thisRow.append(Panel(f"{infoGrid[(y, x)]}", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.shown_unselected[infoGrid[(y, x)]]))
                 else:
-                    thisRow.append(Panel(" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_unselected))
+                    if flagGrid[(y, x)] == 1:
+                        thisRow.append(Panel("🚩", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_unselected))
+                    else:
+                        thisRow.append(Panel(" ", box=box.SQUARE, width=6, height=3, title_align="center", style=styles.hidden_unselected))
         grid.add_row(*thisRow)
         thisRow = []
     return grid
@@ -219,7 +232,17 @@ with Live(Align.center(printGrid()), refresh_per_second=30) as live:
             selected = (selected[0], selected[1]+1)
             if selected[1] > height-1:
                 selected = (selected[0], selected[1]-1)
+        elif k == key.BACKSPACE:
+            if discoveryGrid[(selected[0], selected[1])] == 0:
+                if flagGrid[(selected[0], selected[1])] == 0:
+                    flagGrid[(selected[0], selected[1])] = 1
+                else:
+                    flagGrid[(selected[0], selected[1])] = 0
+            else:
+                pass
         elif k == key.ENTER:
+            if flagGrid[(selected[0], selected[1])] == 1:
+                continue
             if firstClick == True:
                 firstClick = False
                 safe = [] # NOTE: From this line until the 13 next AI was used. 

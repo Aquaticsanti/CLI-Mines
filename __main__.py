@@ -125,56 +125,10 @@ _infoGrid_ guide:
 0 = Empty
 1 - 8 = n mines around cell
 """
+firstClick = True
 infoGrid = np.zeros((width, height), dtype=int) # Array that holds what cells are what
 flat = infoGrid.flatten() # make a copy as a 1D array
 flat[-mines:] = -1
-np.random.shuffle(flat)
-infoGrid = flat.reshape(width, height)
-for i in range(width):
-    for j in range(height):
-        if infoGrid[(i, j)] != -1:
-            pass
-        else:
-            try:
-                if infoGrid[(i, j+1)] > -1:
-                    infoGrid[(i, j+1)] += 1
-            except:
-                pass
-            try:
-                if infoGrid[(i, j-1)] > -1:
-                    infoGrid[(i, j-1)] += 1
-            except:
-                pass
-            try:
-                if infoGrid[(i+1, j)] > -1:
-                    infoGrid[(i+1, j)] += 1
-            except:
-                pass
-            try:
-                if infoGrid[(i-1, j)] > -1:
-                    infoGrid[(i-1, j)] += 1
-            except:
-                pass
-            try:
-                if infoGrid[(i-1, j-1)] > -1:
-                    infoGrid[(i-1, j-1)] += 1
-            except:
-                pass
-            try:
-                if infoGrid[(i+1, j+1)] > -1:
-                    infoGrid[(i+1, j+1)] += 1
-            except:
-                pass
-            try:
-                if infoGrid[(i+1, j-1)] > -1:
-                    infoGrid[(i+1, j-1)] += 1
-            except:
-                pass
-            try:
-                if infoGrid[(i-1, j+1)] > -1:
-                    infoGrid[(i-1, j+1)] += 1
-            except:
-                pass
 
 
 """
@@ -268,4 +222,66 @@ while True:
         if selected[1] > height-1:
             selected = (selected[0], selected[1]-1)
     elif k == key.ENTER:
+        if firstClick == True:
+            firstClick = False
+            safe = [] # NOTE: From this line (227) until line 286 AI was used. 
+            for dy in [-1, 0, 1]:
+                for dx in [-1, 0, 1]:
+                    ny = selected[0] + dy
+                    nx = selected[1] + dx
+                    if 0 <= ny < width and 0 <= nx < height:
+                        safe.append(ny * height + nx)
+            positions = []
+            for i in range(len(flat)):
+                if i not in safe:
+                    positions.append(i)
+            values = flat[positions]
+            np.random.shuffle(values)
+            flat[positions] = values
+            infoGrid = flat.reshape(width, height)
+            for i in range(width):
+                for j in range(height):
+                    if infoGrid[(i, j)] != -1:
+                        pass
+                    else:
+                        try:
+                            if infoGrid[(i, j+1)] > -1:
+                                infoGrid[(i, j+1)] += 1
+                        except IndexError:
+                            pass
+                        try:
+                            if infoGrid[(i, j-1)] > -1:
+                                infoGrid[(i, j-1)] += 1
+                        except IndexError:
+                            pass
+                        try:
+                            if infoGrid[(i+1, j)] > -1:
+                                infoGrid[(i+1, j)] += 1
+                        except IndexError:
+                            pass
+                        try:
+                            if infoGrid[(i-1, j)] > -1:
+                                infoGrid[(i-1, j)] += 1
+                        except IndexError:
+                            pass
+                        try:
+                            if infoGrid[(i-1, j-1)] > -1:
+                                infoGrid[(i-1, j-1)] += 1
+                        except IndexError:
+                            pass
+                        try:
+                            if infoGrid[(i+1, j+1)] > -1:
+                                infoGrid[(i+1, j+1)] += 1
+                        except IndexError:
+                            pass
+                        try:
+                            if infoGrid[(i+1, j-1)] > -1:
+                                infoGrid[(i+1, j-1)] += 1
+                        except IndexError:
+                            pass
+                        try:
+                            if infoGrid[(i-1, j+1)] > -1:
+                                infoGrid[(i-1, j+1)] += 1
+                        except IndexError:
+                            pass
         discover_and_adjacents(selected[0], selected[1])

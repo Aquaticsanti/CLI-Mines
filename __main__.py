@@ -127,7 +127,7 @@ _infoGrid_ guide:
 """
 infoGrid = np.zeros((width, height), dtype=int) # Array that holds what cells are what
 flat = infoGrid.flatten() # make a copy as a 1D array
-flat[-10:] = -1
+flat[-mines:] = -1
 np.random.shuffle(flat)
 infoGrid = flat.reshape(width, height)
 for i in range(width):

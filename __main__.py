@@ -6,8 +6,6 @@ from rich.style import Style
 from rich.live import Live
 from rich.align import Align
 from readchar import key, readkey
-import random
-import time
 import numpy as np
 import os
 

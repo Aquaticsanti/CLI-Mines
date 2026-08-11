@@ -110,6 +110,8 @@ while True:
             mines -= 1
             if mines < 1:
                 mines += 1
+        if (width * height) < mines:
+            mines = width * height
     elif k == key.RIGHT:
         if selected == 1:
             width += 1
@@ -117,6 +119,8 @@ while True:
             height += 1
         elif selected == 3:
             mines += 1
+            if mines > (height * width):
+                mines -= 1
     elif k == key.ENTER and selected == 4:
         break
 

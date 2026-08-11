@@ -8,6 +8,7 @@ from rich.align import Align
 from readchar import key, readkey
 import numpy as np
 import os
+from playsound3 import playsound
 
 def cls():
     os.system('cls' if os.name=='nt' else 'clear')
@@ -236,6 +237,7 @@ with Live(Align.center(printGrid()), refresh_per_second=30) as live:
                 selected = (selected[0], selected[1]-1)
         elif k == key.BACKSPACE:
             if discoveryGrid[(selected[0], selected[1])] == 0:
+                playsound("sfx/flag.wav", block=False)
                 if flagGrid[(selected[0], selected[1])] == 0:
                     flagGrid[(selected[0], selected[1])] = 1
                 else:
@@ -308,4 +310,8 @@ with Live(Align.center(printGrid()), refresh_per_second=30) as live:
                             except IndexError:
                                 pass
             discover_and_adjacents(selected[0], selected[1])
+            if infoGrid[(selected[0], selected[1])] == -1:
+                playsound("sfx/explosion.wav", block=False)
+            else:
+                playsound("sfx/shovel.wav", block=False)
         live.update(Align.center(printGrid()))

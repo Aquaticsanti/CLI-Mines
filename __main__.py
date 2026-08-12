@@ -269,46 +269,30 @@ with Live(Align.center(printGrid()), refresh_per_second=30) as live:
                         if infoGrid[(i, j)] != -1:
                             pass
                         else:
-                            try:
+                            if j+1 <= height-1:
                                 if infoGrid[(i, j+1)] > -1:
                                     infoGrid[(i, j+1)] += 1
-                            except IndexError:
-                                pass
-                            try:
+                            if j-1 >= 0:
                                 if infoGrid[(i, j-1)] > -1:
                                     infoGrid[(i, j-1)] += 1
-                            except IndexError:
-                                pass
-                            try:
+                            if i+1 <= width-1:
                                 if infoGrid[(i+1, j)] > -1:
                                     infoGrid[(i+1, j)] += 1
-                            except IndexError:
-                                pass
-                            try:
+                            if i-1 >= 0:
                                 if infoGrid[(i-1, j)] > -1:
                                     infoGrid[(i-1, j)] += 1
-                            except IndexError:
-                                pass
-                            try:
+                            if i-1 >= 0 and j-1 >= 0:
                                 if infoGrid[(i-1, j-1)] > -1:
                                     infoGrid[(i-1, j-1)] += 1
-                            except IndexError:
-                                pass
-                            try:
+                            if i+1 <= width-1 and j+1 <= height-1:
                                 if infoGrid[(i+1, j+1)] > -1:
                                     infoGrid[(i+1, j+1)] += 1
-                            except IndexError:
-                                pass
-                            try:
+                            if i+1 <= width-1 and j-1 >= 0:
                                 if infoGrid[(i+1, j-1)] > -1:
                                     infoGrid[(i+1, j-1)] += 1
-                            except IndexError:
-                                pass
-                            try:
+                            if i-1 >= 0 and j+1 <= height-1:
                                 if infoGrid[(i-1, j+1)] > -1:
                                     infoGrid[(i-1, j+1)] += 1
-                            except IndexError:
-                                pass
             discover_and_adjacents(selected[0], selected[1])
             if infoGrid[(selected[0], selected[1])] == -1:
                 playsound("sfx/explosion.wav", block=False)

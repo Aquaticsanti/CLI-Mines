@@ -206,6 +206,9 @@ def printGrid():
     elif outcome == 1:
         grid.title = f"[bold]0[/bold] mines left!\n[bold][underline]You've Won![/underline][/bold]"
         grid.caption = "[italic]Press Enter to exit[/italic]"
+    elif outcome == -1:
+        grid.title = f"[bold]{minesLeft}[/bold] mines left...\n[bold][underline]You lost...[/underline][/bold]"
+        grid.caption = "[italic]Press Enter to exit[/italic]"
     for x in range(height):
         for y in range(width):
             if selected == (y, x):
@@ -375,3 +378,6 @@ with Live(Align.center(printGrid()), refresh_per_second=30, console=console) as 
                 else:
                     playsound("sfx/shovel.wav", block=False)
             live.update(Align.center(printGrid()))
+        else:
+            input()
+            break

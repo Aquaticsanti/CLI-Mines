@@ -203,6 +203,7 @@ def printGrid():
             grid.title = f"[bold]{minesLeft}[/bold] mines left!"
         else:
             grid.title = f"[bold]{minesLeft}[/bold] mines left?"
+        grid.caption = "[underline]Enter[/underline] to open cell, [underline]Backspace[/underline] to flag"
     elif outcome == 1:
         grid.title = f"[bold]0[/bold] mines left!\n[bold][underline]You've Won![/underline][/bold]"
         grid.caption = "[italic]Press Enter to exit[/italic]"

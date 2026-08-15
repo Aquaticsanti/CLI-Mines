@@ -7,11 +7,20 @@ from rich.live import Live
 from rich.align import Align
 from readchar import key, readkey
 import numpy as np
-import os
+import os, sys
 from playsound3 import playsound
 
 def cls():
     os.system('cls' if os.name=='nt' else 'clear')
+
+# Source - https://stackoverflow.com/a/54229246
+# Posted by Séraphin, modified by community. See post 'Timeline' for change history
+# Retrieved 2026-08-15, License - CC BY-SA 4.0
+try:
+   wd = sys._MEIPASS
+except AttributeError:
+   wd = os.getcwd()
+sfx_path = os.path.join(wd,"sfx")
 
 # Default values definition
 width = 9
@@ -295,7 +304,7 @@ with Live(Align.center(printGrid()), refresh_per_second=30, console=console) as 
                     selected = (selected[0], selected[1]-1)
             elif k == key.BACKSPACE:
                 if discoveryGrid[(selected[0], selected[1])] == 0:
-                    playsound("sfx/flag.wav", block=False)
+                    playsound(os.path.join(sfx_path, "flag.wav"), block=False)
                     
                     if flagGrid[(selected[0], selected[1])] == 0:
                         flagGrid[(selected[0], selected[1])] = 1
@@ -374,10 +383,10 @@ with Live(Align.center(printGrid()), refresh_per_second=30, console=console) as 
                                         infoGrid[(i-1, j+1)] += 1
                 discover_and_adjacents(selected[0], selected[1])
                 if infoGrid[(selected[0], selected[1])] == -1:
-                    playsound("sfx/explosion.wav", block=False)
+                    playsound(os.path.join(sfx_path, "explosion.wav"), block=False)
                     outcome = -1
                 else:
-                    playsound("sfx/shovel.wav", block=False)
+                    playsound(os.path.join(sfx_path, "shovel.wav"), block=False)
             live.update(Align.center(printGrid()))
         else:
             input()

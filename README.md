@@ -14,7 +14,7 @@ Move with arrow keys, dig/uncover with _Enter_, flag with _Backspace_
 Move with up/down, change with left/right, and _Enter_ to, well, _Enter_
 
 # Downloads
-Head to the Downloads section, and grab the [latest release](https://github.com/Aquaticsanti/people.py/releases/latest)!
+Head to the Downloads section, and grab the [latest release](https://github.com/Aquaticsanti/CLI-Mines/releases/latest)!
 
 > [!IMPORTANT]
 > CLI-Mines is only available to Windows, as I don't have the resources to build for Linux, MacOS, or other operating systems.
